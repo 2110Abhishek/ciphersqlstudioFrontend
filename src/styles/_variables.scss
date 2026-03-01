@@ -1,0 +1,26 @@
+// Colors
+$primary-color: #3b82f6; // Modern blue
+$primary-dark: #2563eb;
+$secondary-color: #10b981; // SQL success green
+$danger-color: #ef4444; // SQL error red
+$warning-color: #f59e0b; // Hint orange
+$bg-color: #f8fafc;
+$card-bg: #ffffff;
+$text-main: #1e293b;
+$text-secondary: #64748b;
+$border-color: #e2e8f0;
+
+// Typography
+$font-main: 'Inter', system-ui, -apple-system, sans-serif;
+$font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+// Breakpoints
+$mobile: 320px;
+$tablet: 641px;
+$desktop: 1024px;
+$desktop-large: 1281px;
+
+// Shadows
+$shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+$shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+$shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
