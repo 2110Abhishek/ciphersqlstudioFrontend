@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import Editor from '@monaco-editor/react';
@@ -31,13 +31,8 @@ const AssignmentAttempt = () => {
         fetchAssignment();
     }, [slug]);
 
-    useEffect(() => {
-        if (user && assignment?._id) {
-            fetchHistory();
-        }
-    }, [user, assignment?._id]);
-
-    const fetchHistory = async () => {
+    const fetchHistory = useCallback(async () => {
+        if (!user || !assignment?._id) return;
         try {
             const config = { headers: { Authorization: `Bearer ${user.token}` } };
             const res = await axios.get(`https://ciphersqlstudiobackend.onrender.com/api/attempts?assignmentId=${assignment._id}`, config);
@@ -45,7 +40,13 @@ const AssignmentAttempt = () => {
         } catch (err) {
             console.error('Failed to fetch history');
         }
-    };
+    }, [user, assignment?._id]);
+
+    useEffect(() => {
+        if (user && assignment?._id) {
+            fetchHistory();
+        }
+    }, [user, assignment?._id, fetchHistory]);
 
     const handleExecute = async () => {
         setExecuting(true);
