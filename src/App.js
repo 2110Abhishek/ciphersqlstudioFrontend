@@ -1,10 +1,22 @@
-import React, { useContext } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
 import { AuthProvider, AuthContext } from './context/AuthContext';
 import AssignmentList from './pages/AssignmentList';
 import AssignmentAttempt from './pages/AssignmentAttempt';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+
+// Protected Route Component
+const ProtectedRoute = ({ children }) => {
+  const { user, loading } = useContext(AuthContext);
+
+  if (loading) return <div className="container main-content">Loading...</div>;
+
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+
+  return children;
+};
 
 function AppContent() {
   const { user, logout } = useContext(AuthContext);
@@ -38,7 +50,14 @@ function AppContent() {
       <main>
         <Routes>
           <Route path="/" element={<AssignmentList />} />
-          <Route path="/attempt/:slug" element={<AssignmentAttempt />} />
+          <Route
+            path="/attempt/:slug"
+            element={
+              <ProtectedRoute>
+                <AssignmentAttempt />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>
